@@ -1,0 +1,18 @@
+version: '2'
+
+services:
+  ml-dev:
+    build: .
+    container_name: jupyter_lab_container
+    image: jupyter_lab_container
+    volumes:
+      - $PWD/notebooks:/workspace
+      - /etc/group:/etc/group:ro
+      - /etc/passwd:/etc/passwd:ro
+    command: 'jupyter-lab --allow-root --port 8082 --ip 0.0.0.0 --no-browser'
+    user: "${USER_ID}:${GROUP_ID}"
+    environment:
+      - JUPYTER_DATA_DIR=/workspace/.jupyter
+    ports:
+      - 8081-8090:8081-8090
+    # runtime: nvidia
